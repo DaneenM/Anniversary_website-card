@@ -274,9 +274,12 @@
             document.body.appendChild(confetti);
             confetti.addEventListener('animationend', () => confetti.remove());
         }
-
-        setInterval(createConfetti, 100);
-        for (let i = 0; i < 50; i++) setTimeout(createConfetti, i * 100);
+    
+        // Adjust the interval and initial number of confetti
+        setInterval(createConfetti, 300); // Create a new confetti every 300ms
+        for (let i = 0; i < 20; i++) { // Start with 20 confetti pieces
+            setTimeout(createConfetti, i * 300);
+        }
     </script>
 </body>
 </html>
