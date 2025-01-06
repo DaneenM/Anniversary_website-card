@@ -11,6 +11,11 @@
             100% { background-position: 0% 50%; }
         }
 
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
         @keyframes float {
             0% { transform: translateY(0); opacity: 1; }
             50% { transform: translateY(-20px); opacity: 0.5; }
@@ -62,8 +67,8 @@
             text-align: center;
             position: relative;
             overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
             z-index: 2;
+            animation: heartbeat 2s infinite;
         }
 
         .card:hover {
@@ -105,6 +110,14 @@
             aspect-ratio: 16/9;
             background-color: #fad0c4;
             border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            video {
+                width: 100vw;
+                height: auto;
+                border-radius: 0;
+            }
         }
 
         .date {
@@ -222,6 +235,7 @@
     <div class="card">
         <h1>Happy 1st Anniversary!</h1>
         <p>Every moment with you is a treasure. Here's to many more years together!</p>
+       
         <div class="video-container">
             <video controls>
                 <source src="https://dl.dropboxusercontent.com/scl/fi/qgbosn23odrcex1mxzo3p/080E03E6-D119-4736-8F9D-7BF07451F323-Daneen-Mays-s-conflicted-copy.mov?rlkey=glqvy9dqok7ojp3dzuammzpjk&raw=1" type="video/mp4">
@@ -232,6 +246,7 @@
     </div>
 
     <script>
+        // Confetti Animation
         function createConfetti() {
             const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
             const confetti = document.createElement('div');
@@ -248,9 +263,23 @@
 
         setInterval(createConfetti, 100);
 
-        for(let i = 0; i < 50; i++) {
+        for (let i = 0; i < 50; i++) {
             setTimeout(createConfetti, i * 100);
         }
+
+        // Auto Fullscreen Video on Mobile
+        document.querySelector('video').addEventListener('play', function () {
+            if (window.innerWidth <= 768) { // Mobile screen size
+                const video = this;
+                if (video.requestFullscreen) {
+                    video.requestFullscreen();
+                } else if (video.webkitEnterFullscreen) { // Safari
+                    video.webkitEnterFullscreen();
+                } else if (video.msRequestFullscreen) { // IE/Edge
+                    video.msRequestFullscreen();
+                }
+            }
+        });
     </script>
 </body>
 </html>
